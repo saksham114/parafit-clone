@@ -1,26 +1,107 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* Custom CSS variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --surface: #0E1114;
+  --card: #1A1D21;
+  --primary: #00B887;
+  --text-primary: #FFFFFF;
+  --text-secondary: #9CA3AF;
+  --border: #374151;
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Base styles */
+body {
+  background-color: var(--surface);
+  color: var(--text-primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* PWA Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 184, 135, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 184, 135, 0.8);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* PWA Install Banner */
+.install-banner {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Service Worker Update Toast */
+.update-toast {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* Offline Indicator */
+.offline-indicator {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* PWA-specific styles */
+@media (display-mode: standalone) {
+  .pwa-only {
+    display: block;
+  }
+  
+  .not-pwa {
+    display: none;
+  }
+}
+
+@media (display-mode: browser) {
+  .pwa-only {
+    display: none;
+  }
+  
+  .not-pwa {
+    display: block;
+  }
+}
+
+/* Touch-friendly PWA elements */
+@media (hover: none) and (pointer: coarse) {
+  .pwa-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
