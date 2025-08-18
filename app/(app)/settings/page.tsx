@@ -336,6 +336,22 @@ export default function SettingsPage() {
         </Link>
       </Card>
 
+      {/* Environment Check Link */}
+      <Card>
+        <Link href="/env-check">
+          <div className="flex items-center justify-between p-3 hover:bg-card/40 rounded-xl transition-colors cursor-pointer">
+            <div className="flex items-center">
+              <span className="text-2xl mr-3">⚙️</span>
+              <div>
+                <p className="font-medium text-text-primary">Environment Check</p>
+                <p className="text-sm text-text-secondary">Verify environment variables</p>
+              </div>
+            </div>
+            <span className="text-text-secondary">→</span>
+          </div>
+        </Link>
+      </Card>
+
       {/* Admin Support Link - Only show for admin users */}
       {isAdmin && (
         <Card>
