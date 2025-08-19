@@ -9,6 +9,9 @@ A fitness tracking application built with Next.js, Supabase, and OneSignal for p
 - **Meal Planning**: Daily meal scheduling and management
 - **Settings**: User profile and notification preferences
 - **Push Notifications**: OneSignal integration for meal and water reminders
+- **Admin CMS**: Recipe and meal plan management
+- **PWA**: Progressive Web App with offline support
+- **Analytics**: User interaction tracking
 
 ## Tech Stack
 
@@ -17,14 +20,15 @@ A fitness tracking application built with Next.js, Supabase, and OneSignal for p
 - **Database**: Supabase (PostgreSQL)
 - **Authentication**: Supabase Auth
 - **Push Notifications**: OneSignal
-- **Charts**: Recharts
+- **Charts**: Recharts (client-only)
 - **Icons**: Lucide React
+- **PWA**: Service Worker, Manifest
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 20+ 
 - npm or yarn
 - Supabase account
 - OneSignal account
@@ -55,7 +59,53 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 # OneSignal
 NEXT_PUBLIC_ONESIGNAL_APP_ID=your_onesignal_app_id
+
+# Optional: Supabase Service Role Key (for admin operations)
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 ```
+
+### Development
+
+```bash
+npm run dev
+```
+
+### Build
+
+```bash
+npm run build
+npm start
+```
+
+## Vercel Deployment
+
+### Build Optimizations
+
+The project is optimized for Vercel deployment with:
+
+- **Node.js 20+**: Specified in `package.json` engines
+- **TypeScript**: `skipLibCheck: true` for faster builds
+- **ESLint**: `ignoreDuringBuilds: true` for CI/CD
+- **Dynamic Imports**: Charts and OneSignal components use `{ ssr: false }`
+- **Client Boundaries**: All browser APIs are properly fenced
+
+### Environment Variables
+
+Set these in your Vercel dashboard:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_ONESIGNAL_APP_ID=your_onesignal_app_id
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+```
+
+### Build Commands
+
+Vercel will automatically detect Next.js and use:
+- **Build Command**: `npm run build`
+- **Output Directory**: `.next`
+- **Install Command**: `npm install`
 
 ### OneSignal Setup
 
@@ -108,29 +158,6 @@ NEXT_PUBLIC_ONESIGNAL_APP_ID=your_onesignal_app_id
    FOR SELECT USING (bucket_id = 'images');
    ```
    - This enables image uploads for recipe creation in the admin CMS
-
-### Development
-
-1. Start the development server:
-```bash
-npm run dev
-```
-
-2. Open [http://localhost:3000](http://localhost:3000)
-
-3. Sign in with your Supabase account
-
-### Building for Production
-
-1. Build the application:
-```bash
-npm run build
-```
-
-2. Start the production server:
-```bash
-npm start
-```
 
 ## Project Structure
 

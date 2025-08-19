@@ -15,30 +15,6 @@ export type UseOneSignalReturn = {
   unsubscribe: () => Promise<void>
 }
 
-function ensureSdk(): Promise<void> {
-  return new Promise((resolve) => {
-    if (typeof window === 'undefined') return resolve()
-    // If already present, resolve
-    if (window.OneSignal) return resolve()
-    // If a script is already pending/loaded, still set window.OneSignal array
-    const existing = document.getElementById('onesignal-sdk')
-    if (existing) {
-      window.OneSignal = window.OneSignal || []
-      return resolve()
-    }
-    // Inject SDK
-    const s = document.createElement('script')
-    s.id = 'onesignal-sdk'
-    s.async = true
-    s.src = 'https://cdn.onesignal.com/sdks/OneSignalSDK.page.js'
-    s.onload = () => {
-      window.OneSignal = window.OneSignal || []
-      resolve()
-    }
-    document.head.appendChild(s)
-  })
-}
-
 export function useOneSignal(appId?: string): UseOneSignalReturn {
   // Always call hooks (no early returns)
   const [isInitialized, setIsInitialized] = useState(false)
@@ -57,6 +33,31 @@ export function useOneSignal(appId?: string): UseOneSignalReturn {
       setIsSubscribed(false)
       setPermission(typeof Notification !== 'undefined' ? Notification.permission : 'default')
       return
+    }
+
+    // Move ensureSdk function inside useEffect to prevent module scope access
+    const ensureSdk = (): Promise<void> => {
+      return new Promise((resolve) => {
+        if (typeof window === 'undefined') return resolve()
+        // If already present, resolve
+        if (window.OneSignal) return resolve()
+        // If a script is already pending/loaded, still set window.OneSignal array
+        const existing = document.getElementById('onesignal-sdk')
+        if (existing) {
+          window.OneSignal = window.OneSignal || []
+          return resolve()
+        }
+        // Inject SDK
+        const s = document.createElement('script')
+        s.id = 'onesignal-sdk'
+        s.async = true
+        s.src = 'https://cdn.onesignal.com/sdks/OneSignalSDK.page.js'
+        s.onload = () => {
+          window.OneSignal = window.OneSignal || []
+          resolve()
+        }
+        document.head.appendChild(s)
+      })
     }
 
     ;(async () => {

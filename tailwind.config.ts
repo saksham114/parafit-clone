@@ -21,6 +21,7 @@ const config: Config = {
         error: '#FF5A5F',
         'text-primary': '#E6F6F2',
         'text-secondary': '#A3B8B3',
+        background: '#0E1114',
       },
       borderRadius: {
         'xl': '1rem',

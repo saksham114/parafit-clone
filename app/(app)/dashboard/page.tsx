@@ -1,11 +1,15 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import Card from '@/components/Card'
 import CTAButton from '@/components/CTAButton'
 import CircularProgress from '@/components/CircularProgress'
-import MiniChart from '@/components/MiniChart'
 import { useAnalytics } from '@/hooks/useAnalytics'
+
+// Dynamic imports for charts to prevent SSR bundling
+const WaterChart = dynamic(() => import('@/components/charts/WaterChart'), { ssr: false })
+const WeightChart = dynamic(() => import('@/components/charts/WeightChart'), { ssr: false })
 
 export default function DashboardPage() {
   const [waterIntake, setWaterIntake] = useState(1200)
@@ -48,23 +52,23 @@ export default function DashboardPage() {
 
   // Mock data for charts - in real app, this would come from API
   const waterData = [
-    { date: '2024-01-01', value: 2800 },
-    { date: '2024-01-02', value: 3200 },
-    { date: '2024-01-03', value: 2500 },
-    { date: '2024-01-04', value: 3000 },
-    { date: '2024-01-05', value: 2700 },
-    { date: '2024-01-06', value: 3100 },
-    { date: '2024-01-07', value: 2900 },
+    { date: '2024-01-01', ml: 2800 },
+    { date: '2024-01-02', ml: 3200 },
+    { date: '2024-01-03', ml: 2500 },
+    { date: '2024-01-04', ml: 3000 },
+    { date: '2024-01-05', ml: 2700 },
+    { date: '2024-01-06', ml: 3100 },
+    { date: '2024-01-07', ml: 2900 },
   ]
 
   const weightData = [
-    { date: '2024-01-01', value: 75.2 },
-    { date: '2024-01-02', value: 75.1 },
-    { date: '2024-01-03', value: 74.9 },
-    { date: '2024-01-04', value: 75.0 },
-    { date: '2024-01-05', value: 74.8 },
-    { date: '2024-01-06', value: 74.7 },
-    { date: '2024-01-07', value: 74.6 },
+    { date: '2024-01-01', kg: 75.2 },
+    { date: '2024-01-02', kg: 75.1 },
+    { date: '2024-01-03', kg: 74.9 },
+    { date: '2024-01-04', kg: 75.0 },
+    { date: '2024-01-05', kg: 74.8 },
+    { date: '2024-01-06', kg: 74.7 },
+    { date: '2024-01-07', kg: 74.6 },
   ]
 
   const addWater = (amount: number) => {
@@ -191,11 +195,11 @@ export default function DashboardPage() {
       <div className="grid grid-cols-2 gap-4">
         <Card>
           <h3 className="text-lg font-semibold text-text-primary mb-3">Water (7 days)</h3>
-          <MiniChart type="bar" data={waterData} color="#10b981" height={80} />
+          <WaterChart data={waterData} />
         </Card>
         <Card>
           <h3 className="text-lg font-semibold text-text-primary mb-3">Weight (7 days)</h3>
-          <MiniChart type="line" data={weightData} color="#3b82f6" height={80} />
+          <WeightChart data={weightData} />
         </Card>
       </div>
     </div>
