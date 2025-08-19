@@ -23,10 +23,11 @@ export default function SignInPage() {
 
     try {
       const supabase = createClient()
+      const redirectTo = new URL('/auth/callback', window.location.origin).toString()
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: redirectTo,
         },
       })
 
