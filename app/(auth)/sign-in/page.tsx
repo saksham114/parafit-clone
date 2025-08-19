@@ -1,5 +1,9 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
+export const runtime = 'nodejs'
+
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase-browser'
 import CTAButton from '@/components/CTAButton'

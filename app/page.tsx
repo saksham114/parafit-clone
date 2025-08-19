@@ -1,3 +1,8 @@
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+export const fetchCache = 'force-no-store'
+export const runtime = 'nodejs'
+
 import { redirect } from 'next/navigation'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'

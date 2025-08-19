@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+export const viewport = {
+  themeColor: "#00B887",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false
+}
+
 export const metadata: Metadata = {
   title: "Parafit Clone",
   description: "A fitness and nutrition tracking app",
   manifest: "/manifest.json",
-  themeColor: "#00B887",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
