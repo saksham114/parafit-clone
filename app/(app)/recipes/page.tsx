@@ -1,14 +1,8 @@
 'use client'
 
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'force-no-store'
-export const runtime = 'nodejs'
-
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
-import Card from '@/components/Card'
-import CTAButton from '@/components/CTAButton'
-import SearchBar from '@/components/SearchBar'
+import { Card, CardContent } from '@/components/ui/Card'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
 export default function RecipesPage() {
@@ -86,7 +80,7 @@ export default function RecipesPage() {
       fat: 6,
       image: "🍯",
       time: "5 min",
-      thumbnail: "https://images.unsplash.com/photo-1488477181946-6428a02819aa?w=400&h=300&fit=crop"
+      thumbnail: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop"
     }
   ];
 
@@ -110,66 +104,75 @@ export default function RecipesPage() {
   }
 
   return (
-    <div className="space-y-6 pb-24">
-      {/* Search Bar */}
-      <SearchBar 
-        placeholder="Search recipes..." 
-        onSearch={handleSearch}
-      />
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-screen-sm mx-auto p-4 space-y-4">
+        {/* Search Bar */}
+        <div>
+          <input
+            type="text"
+            placeholder="Search recipes..."
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="w-full px-4 py-3 bg-white rounded-full shadow-card border border-gray-200 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
+          />
+        </div>
 
-      {/* Recipes Grid */}
-      <div className="space-y-4">
-        {filteredRecipes.map((recipe) => (
-          <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
-            <Card variant="glass" className="hover:bg-card/80 transition-all duration-200 cursor-pointer">
-              <div className="flex gap-4">
-                {/* Thumbnail */}
-                <div className="w-24 h-24 rounded-2xl overflow-hidden bg-card/40 flex-shrink-0">
-                  <img 
-                    src={recipe.thumbnail} 
-                    alt={recipe.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                
-                {/* Recipe Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-lg font-semibold text-text-primary truncate">{recipe.name}</h3>
-                    <span className="inline-block bg-primary/20 text-primary text-xs px-2 py-1 rounded-full flex-shrink-0 ml-2">
-                      {recipe.time}
-                    </span>
+        {/* Recipes Grid */}
+        <div className="space-y-4">
+          {filteredRecipes.map((recipe) => (
+            <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
+              <Card className="hover:shadow-lg transition-all duration-200 cursor-pointer">
+                <CardContent className="p-0">
+                  <div className="flex gap-4 p-4">
+                    {/* Thumbnail */}
+                    <div className="w-24 h-24 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                      <img 
+                        src={recipe.thumbnail} 
+                        alt={recipe.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    
+                    {/* Recipe Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between mb-2">
+                        <h3 className="text-lg font-semibold text-gray-900 truncate">{recipe.name}</h3>
+                        <span className="inline-block bg-brand-100 text-brand-700 text-xs px-2 py-1 rounded-full flex-shrink-0 ml-2">
+                          {recipe.time}
+                        </span>
+                      </div>
+                      
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">{recipe.description}</p>
+                      
+                      {/* Macro Chips */}
+                      <div className="flex flex-wrap gap-2">
+                        <span className="inline-block bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">
+                          {recipe.calories} kcal
+                        </span>
+                        <span className="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">
+                          P: {recipe.protein}g
+                        </span>
+                        <span className="inline-block bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">
+                          C: {recipe.carbs}g
+                        </span>
+                        <span className="inline-block bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">
+                          F: {recipe.fat}g
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  
-                  <p className="text-sm text-text-secondary mb-3 line-clamp-2">{recipe.description}</p>
-                  
-                  {/* Macro Chips */}
-                  <div className="flex flex-wrap gap-2">
-                    <span className="inline-block bg-red-500/20 text-red-500 text-xs px-2 py-1 rounded-full">
-                      {recipe.calories} kcal
-                    </span>
-                    <span className="inline-block bg-blue-500/20 text-blue-500 text-xs px-2 py-1 rounded-full">
-                      P: {recipe.protein}g
-                    </span>
-                    <span className="inline-block bg-green-500/20 text-green-500 text-xs px-2 py-1 rounded-full">
-                      C: {recipe.carbs}g
-                    </span>
-                    <span className="inline-block bg-yellow-500/20 text-yellow-500 text-xs px-2 py-1 rounded-full">
-                      F: {recipe.fat}g
-                    </span>
-                  </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+          
+          {filteredRecipes.length === 0 && (
+            <Card className="text-center py-8">
+              <p className="text-gray-600">No recipes found matching "{searchQuery}"</p>
+              <p className="text-sm text-gray-500 mt-2">Try adjusting your search terms</p>
             </Card>
-          </Link>
-        ))}
-        
-        {filteredRecipes.length === 0 && (
-          <Card variant="glass" className="text-center py-8">
-            <p className="text-text-secondary">No recipes found matching "{searchQuery}"</p>
-            <p className="text-sm text-text-secondary/60 mt-2">Try adjusting your search terms</p>
-          </Card>
-        )}
+          )}
+        </div>
       </div>
     </div>
   )

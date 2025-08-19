@@ -4,19 +4,56 @@
 
 /* Custom CSS variables */
 :root {
-  --surface: #0E1114;
-  --card: #1A1D21;
-  --primary: #00B887;
-  --text-primary: #FFFFFF;
-  --text-secondary: #9CA3AF;
-  --border: #374151;
+  --surface: #F9FAFB;
+  --card: #FFFFFF;
+  --primary: #2E7D32;
+  --text-primary: #1F2937;
+  --text-secondary: #6B7280;
+  --border: #E5E7EB;
   --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Base styles */
 body {
-  background-color: var(--surface);
-  color: var(--text-primary);
+  @apply bg-gray-50 text-gray-900;
+}
+
+/* Link styles */
+a { 
+  @apply text-brand-600 no-underline; 
+}
+
+a:hover { 
+  @apply text-brand-700; 
+}
+
+/* Design system utilities */
+.card { 
+  @apply bg-white rounded-2xl shadow-card; 
+}
+
+.chip { 
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium; 
+}
+
+.chip-soft { 
+  @apply bg-gray-100 text-gray-700; 
+}
+
+.chip-brand { 
+  @apply bg-brand-50 text-brand-700; 
+}
+
+.chip-success { 
+  @apply bg-emerald-50 text-emerald-700; 
+}
+
+.chip-warn { 
+  @apply bg-amber-50 text-amber-700; 
+}
+
+.chip-danger { 
+  @apply bg-rose-50 text-rose-700; 
 }
 
 /* PWA Animations */
@@ -42,10 +79,10 @@ body {
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(0, 184, 135, 0.5);
+    box-shadow: 0 0 5px rgba(46, 125, 50, 0.5);
   }
   50% {
-    box-shadow: 0 0 20px rgba(0, 184, 135, 0.8);
+    box-shadow: 0 0 20px rgba(46, 125, 50, 0.8);
   }
 }
 

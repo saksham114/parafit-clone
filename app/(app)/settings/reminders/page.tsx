@@ -1,12 +1,7 @@
 'use client'
 
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'force-no-store'
-export const runtime = 'nodejs'
-
 import { useState, useEffect } from 'react'
-import Card from '@/components/Card'
-import CTAButton from '@/components/CTAButton'
+import { Card, CardContent } from '@/components/ui/Card'
 import Chip from '@/components/Chip'
 import Toast from '@/components/Toast'
 import { useOneSignal } from '@/hooks/useOneSignal'
@@ -198,127 +193,123 @@ export default function RemindersPage() {
   }
 
   return (
-    <div className="space-y-6 pb-24">
-      {/* Header */}
-      <Card variant="glass" className="text-center">
-        <h1 className="text-2xl font-bold text-text-primary mb-2">Reminders</h1>
-        <p className="text-text-secondary">Set up meal and water reminders</p>
-      </Card>
-
-      {/* Meal Reminders */}
-      <Card>
-        <h2 className="text-xl font-semibold text-text-primary mb-4">🍽️ Meal Reminders</h2>
-        <div className="space-y-4">
-          <div className="flex gap-2">
-            <input
-              type="time"
-              value={mealTimeInput}
-              onChange={(e) => setMealTimeInput(e.target.value)}
-              onKeyPress={(e) => handleKeyPress(e, 'meal')}
-              className="flex-1 px-3 py-2 bg-card/60 border border-card/40 rounded-xl text-text-primary focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-            <CTAButton 
-              size="sm" 
-              onClick={addMealTime}
-              disabled={!validateTime(mealTimeInput) || isLoading}
-            >
-              Add
-            </CTAButton>
-          </div>
-          
-          {reminders.meal_times.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {reminders.meal_times.map((time) => (
-                <Chip
-                  key={time}
-                  label={time}
-                  variant="removable"
-                  onRemove={() => removeMealTime(time)}
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-screen-sm mx-auto p-4 space-y-4">
+        {/* Meal Reminders */}
+        <Card>
+          <CardContent>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">🍽️ Meal Reminders</h2>
+            <div className="space-y-4">
+              <div className="flex gap-2">
+                <input
+                  type="time"
+                  value={mealTimeInput}
+                  onChange={(e) => setMealTimeInput(e.target.value)}
+                  onKeyPress={(e) => handleKeyPress(e, 'meal')}
+                  className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                 />
-              ))}
+                <button
+                  onClick={addMealTime}
+                  disabled={!validateTime(mealTimeInput) || isLoading}
+                  className="px-4 py-2 bg-brand-600 text-white rounded-full font-medium hover:bg-brand-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
+                >
+                  Add
+                </button>
+              </div>
+              
+              {reminders.meal_times.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {reminders.meal_times.map((time) => (
+                    <Chip
+                      key={time}
+                      label={time}
+                      variant="removable"
+                      onRemove={() => removeMealTime(time)}
+                    />
+                  ))}
+                </div>
+              )}
+              
+              {reminders.meal_times.length === 0 && (
+                <p className="text-gray-600 text-sm text-center py-4">
+                  No meal reminders set
+                </p>
+              )}
             </div>
-          )}
-          
-          {reminders.meal_times.length === 0 && (
-            <p className="text-text-secondary text-sm text-center py-4">
-              No meal reminders set
-            </p>
-          )}
-        </div>
-      </Card>
+          </CardContent>
+        </Card>
 
-      {/* Water Reminders */}
-      <Card>
-        <h2 className="text-xl font-semibold text-text-primary mb-4">💧 Water Reminders</h2>
-        <div className="space-y-4">
-          <div className="flex gap-2">
-            <input
-              type="time"
-              value={waterTimeInput}
-              onChange={(e) => setWaterTimeInput(e.target.value)}
-              onKeyPress={(e) => handleKeyPress(e, 'water')}
-              className="flex-1 px-3 py-2 bg-card/60 border border-card/40 rounded-xl text-text-primary focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-            <CTAButton 
-              size="sm" 
-              onClick={addWaterTime}
-              disabled={!validateTime(waterTimeInput) || isLoading}
-            >
-              Add
-            </CTAButton>
-          </div>
-          
-          {reminders.water_times.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {reminders.water_times.map((time) => (
-                <Chip
-                  key={time}
-                  label={time}
-                  variant="removable"
-                  onRemove={() => removeWaterTime(time)}
+        {/* Water Reminders */}
+        <Card>
+          <CardContent>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">💧 Water Reminders</h2>
+            <div className="space-y-4">
+              <div className="flex gap-2">
+                <input
+                  type="time"
+                  value={waterTimeInput}
+                  onChange={(e) => setWaterTimeInput(e.target.value)}
+                  onKeyPress={(e) => handleKeyPress(e, 'water')}
+                  className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                 />
-              ))}
+                <button
+                  onClick={addWaterTime}
+                  disabled={!validateTime(waterTimeInput) || isLoading}
+                  className="px-4 py-2 bg-brand-600 text-white rounded-full font-medium hover:bg-brand-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
+                >
+                  Add
+                </button>
+              </div>
+              
+              {reminders.water_times.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {reminders.water_times.map((time) => (
+                    <Chip
+                      key={time}
+                      label={time}
+                      variant="removable"
+                      onRemove={() => removeWaterTime(time)}
+                    />
+                  ))}
+                </div>
+              )}
+              
+              {reminders.water_times.length === 0 && (
+                <p className="text-gray-600 text-sm text-center py-4">
+                  No water reminders set
+                </p>
+              )}
             </div>
-          )}
-          
-          {reminders.water_times.length === 0 && (
-            <p className="text-text-secondary text-sm text-center py-4">
-              No water reminders set
+          </CardContent>
+        </Card>
+
+        {/* Info */}
+        <Card>
+          <CardContent>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">ℹ️ How it works</h3>
+            <p className="text-sm text-gray-600 mb-3">
+              Set reminder times for meals and water intake. You'll receive push notifications at these times to help you stay on track with your fitness goals.
             </p>
-          )}
-        </div>
-      </Card>
+            <p className="text-xs text-gray-500">
+              Times are in 24-hour format (HH:MM). Reminders are automatically sorted chronologically.
+            </p>
+          </CardContent>
+        </Card>
 
-      {/* Info */}
-      <Card variant="glass">
-        <h3 className="text-lg font-semibold text-text-primary mb-2">ℹ️ How it works</h3>
-        <p className="text-sm text-text-secondary mb-3">
-          Set reminder times for meals and water intake. You'll receive push notifications at these times to help you stay on track with your fitness goals.
-        </p>
-        <p className="text-xs text-text-secondary/60">
-          Times are in 24-hour format (HH:MM). Reminders are automatically sorted chronologically.
-        </p>
-      </Card>
+        {/* Toast */}
+        {showToast && (
+          <Toast
+            message={toastMessage}
+            type={toastType}
+            onClose={() => setShowToast(false)}
+          />
+        )}
 
-      {/* Toast */}
-      {showToast && (
-        <Toast
-          message={toastMessage}
-          type={toastType}
-          onClose={() => setShowToast(false)}
-        />
-      )}
-
-      {/* OneSignal Banner */}
-      {showOneSignalBanner && (
-        <OneSignalBanner
-          onClose={() => setShowOneSignalBanner(false)}
-          onRetry={() => {
-            setShowOneSignalBanner(false)
-            // The hook will automatically retry permission request
-          }}
-        />
-      )}
+        {/* OneSignal Banner */}
+        {showOneSignalBanner && (
+          <OneSignalBanner />
+        )}
+      </div>
     </div>
   )
 }

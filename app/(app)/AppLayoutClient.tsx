@@ -1,10 +1,11 @@
 'use client'
 
 import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import { createClient } from '@/lib/supabase-browser'
-import TopBar from '@/components/TopBar'
-import BottomTabs from '@/components/BottomTabs'
+import AppBar from '@/components/ui/AppBar'
+import BottomNav from '@/components/ui/BottomNav'
 import PWAProvider from '@/components/PWAProvider'
 import InstallBanner from '@/components/InstallBanner'
 import { useAnalytics } from '@/hooks/useAnalytics'
@@ -19,6 +20,7 @@ export default function AppLayoutClient({
 }) {
   const { setUserId, trackInteraction } = useAnalytics()
   const supabase = createClient()
+  const pathname = usePathname()
   
   // Get OneSignal App ID from environment
   const oneSignalAppId = process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID ?? undefined
@@ -56,15 +58,18 @@ export default function AppLayoutClient({
     return () => subscription.unsubscribe()
   }, [supabase, setUserId, trackInteraction])
 
+  // Only show AppBar on dashboard
+  const isDashboard = pathname === '/dashboard'
+
   return (
     <OneSignalProvider appId={oneSignalAppId}>
       <PWAProvider>
-        <div className="min-h-screen bg-background flex flex-col">
-          <TopBar title="Parafit Clone" />
-          <main className="flex-1 px-4 py-6">
+        <div className="min-h-screen bg-gray-50">
+          {isDashboard && <AppBar title="Home" />}
+          <main className="max-w-screen-sm mx-auto pb-28">
             {children}
           </main>
-          <BottomTabs />
+          <BottomNav />
           <InstallBanner />
         </div>
       </PWAProvider>

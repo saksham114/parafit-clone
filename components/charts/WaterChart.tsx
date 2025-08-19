@@ -9,21 +9,22 @@ export default function WaterChart({ data }: { data: { date: string, ml: number 
         <BarChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
           <XAxis 
             dataKey="date" 
-            stroke="#9CA3AF"
+            stroke="#6B7280"
             fontSize={12}
             tickFormatter={(value) => new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
           />
           <YAxis 
-            stroke="#9CA3AF"
+            stroke="#6B7280"
             fontSize={12}
             tickFormatter={(value) => `${value}ml`}
           />
           <Tooltip 
             contentStyle={{ 
-              backgroundColor: '#1F2937', 
-              border: '1px solid #374151',
-              borderRadius: '8px',
-              color: '#F9FAFB'
+              backgroundColor: '#FFFFFF', 
+              border: '1px solid #E5E7EB',
+              borderRadius: '12px',
+              color: '#1F2937',
+              boxShadow: '0 10px 24px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.04)'
             }}
             labelFormatter={(value) => new Date(value).toLocaleDateString('en-US', { 
               weekday: 'short', 

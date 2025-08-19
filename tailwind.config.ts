@@ -9,25 +9,45 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#00B887',
-          600: '#00A47A',
-          700: '#0B8E6D',
+        brand: {
+          50: '#ECF7F2',
+          100: '#D6EFE5',
+          200: '#AEE1CB',
+          300: '#84D3B1',
+          400: '#5DC79B',
+          500: '#2E7D32',
+          600: '#276C2B',
+          700: '#1F5823',
+          800: '#17441B',
+          900: '#0F2F13'
         },
-        surface: '#0E1114',
-        card: '#14191E',
+        gray: { 25: '#FCFEFF' },
+        coral: { 500: '#FF6F61' },
+        warn: { 500: '#F5B041' },
+        ok: { 500: '#2ECC71' },
+        danger: { 500: '#E74C3C' },
+        primary: {
+          DEFAULT: '#2E7D32',
+          600: '#276C2B',
+          700: '#1F5823',
+        },
+        surface: '#F9FAFB',
+        card: '#FFFFFF',
         accent: '#37D0B2',
-        warning: '#FFB020',
-        error: '#FF5A5F',
-        'text-primary': '#E6F6F2',
-        'text-secondary': '#A3B8B3',
-        background: '#0E1114',
+        warning: '#F5B041',
+        error: '#E74C3C',
+        'text-primary': '#1F2937',
+        'text-secondary': '#6B7280',
+        background: '#F9FAFB',
       },
       borderRadius: {
         'xl': '1rem',
-        '2xl': '1.5rem',
+        '2xl': '1.25rem',
+        'full': '9999px',
       },
       boxShadow: {
+        'card': '0 10px 24px rgba(16,24,40,.06), 0 2px 6px rgba(16,24,40,.04)',
+        'inset': 'inset 0 1px 0 rgba(255,255,255,0.3)',
         'soft': '0 4px 20px rgba(0, 0, 0, 0.15)',
       },
       fontSize: {
@@ -38,7 +58,7 @@ const config: Config = {
         'small': ['0.875rem', { lineHeight: '1.25rem' }], // 14px
       },
       backgroundImage: {
-        'radial-gradient': 'radial-gradient(ellipse at center, rgba(0, 184, 135, 0.1) 0%, transparent 70%)',
+        'radial-gradient': 'radial-gradient(ellipse at center, rgba(46, 125, 50, 0.1) 0%, transparent 70%)',
       },
     },
   },
