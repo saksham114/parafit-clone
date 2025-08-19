@@ -1,7 +1,8 @@
-import dynamic from 'next/dynamic'
+import AppLayoutClient from '@/app/(app)/AppLayoutClient'
 
-// Dynamic import for the client component wrapper
-const AppLayoutClient = dynamic(() => import('./AppLayoutClient'))
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+export const runtime = 'nodejs'
 
 export default function AppLayout({
   children,

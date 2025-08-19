@@ -1,15 +1,19 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+export const runtime = 'nodejs'
+
 import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
+import dynamicImport from 'next/dynamic'
 import Card from '@/components/Card'
 import CTAButton from '@/components/CTAButton'
 import CircularProgress from '@/components/CircularProgress'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
 // Dynamic imports for charts to prevent SSR bundling
-const WaterChart = dynamic(() => import('@/components/charts/WaterChart'), { ssr: false })
-const WeightChart = dynamic(() => import('@/components/charts/WeightChart'), { ssr: false })
+const WaterChart = dynamicImport(() => import('@/components/charts/WaterChart'), { ssr: false })
+const WeightChart = dynamicImport(() => import('@/components/charts/WeightChart'), { ssr: false })
 
 export default function DashboardPage() {
   const [waterIntake, setWaterIntake] = useState(1200)

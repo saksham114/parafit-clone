@@ -1,5 +1,9 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+export const runtime = 'nodejs'
+
 import { useState, useEffect } from 'react'
 import Card from '@/components/Card'
 import CTAButton from '@/components/CTAButton'
